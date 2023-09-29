@@ -13,11 +13,9 @@ Features:
 
 ## Integration
 
-### Swift Package Manager
-
 ```swift
 dependencies: [
-    .package(url: "https://github.com/ChimeHQ/JSONRPC")
+    .package(url: "https://github.com/ChimeHQ/JSONRPC", from: "0.8.0)
 ]
 ```
 
@@ -46,11 +44,32 @@ Task {
 }
 ```
 
-### Suggestions or Feedback
 
-We'd love to hear from you! Get in touch via an issue or pull request.
+### DataChannel
 
-Please note that this project is released with a [Contributor Code of Conduct](CODE_OF_CONDUCT.md). By participating in this project you agree to abide by its terms.
+The closures on the `DataChannel` allow different transport mechanisms to be used. The `JSONRPC` package provides a few basic variants:
+
+- Predefined messages channel
+  - A channel that delivers a static set of messages
+  - Usage: `let channel = await DataChannel.predefinedMessagesChannel(with: messages)`
+- Stdio channel
+  - Using stdout + stdin as message transport.
+  - Note: When using this transport, make sure no non-protocol messages are sent to `stdout`, eg using `print`
+  - Usage: `let channel = DataChannel.stdioPipe()`
+- Actor channel
+  - Using swift actors to pass messages.
+  - Can eg be useful for testing, where both client and server are implemented in swift and running in the same process.
+  - Usage: `let (clientChannel, serverChannel) = DataChannel.withDataActor()`
+
+## Contributing and Collaboration
+
+I'd love to hear from you! Get in touch via an issue or pull request.
+
+I prefer collaboration, and would love to find ways to work together if you have a similar project.
+
+I prefer indentation with tabs for improved accessibility. But, I'd rather you use the system you want and make a PR than hesitate because of whitespace.
+
+By participating in this project you agree to abide by the [Contributor Code of Conduct](CODE_OF_CONDUCT.md).
 
 [build status]: https://github.com/ChimeHQ/JSONRPC/actions
 [build status badge]: https://github.com/ChimeHQ/JSONRPC/workflows/CI/badge.svg
